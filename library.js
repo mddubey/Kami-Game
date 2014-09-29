@@ -3,8 +3,7 @@ var deployMatrix = function(matrix){
 	for (var i = 0; i < matrix.length; i++) {
 		str += '<tr>';
 		for (var j = 0; j < matrix[i].length; j++) {
-			var className = (Math.random() > 0.5)? 'x' : 'o';
-			str += '<td class="'+matrix[i][j]+'">'+i+','+j+'</td>';
+			str += '<td class="'+matrix[i][j]+'" data-coordinate="'+i+','+j+'"></td>';
 		};
 		str+= '</tr>';
 	};
@@ -22,29 +21,15 @@ var generateMatrix = function(){
 	return matrix;
 }
 
-
-var printMatrix = function(matrix){
-	var str = '';
-	for (var i = 0; i < matrix.length; i++) {
-		for (var j = 0; j < matrix[i].length; j++) {
-			str += matrix[i][j]+'\t\t';
-		};
-		str += '\n\n';
-	};
-	str += '*********************************';
-	console.log(str);
-}
-
-
-var changeCoordinates = function(matrix,size,start,end){
+var changeCoordinates = function(matrix,initial,size,start,end){
 	if(start >= size || end >= size || start < 0 || end < 0)
 		return;
-	if(matrix[start][end] == 'x') return;
-	matrix[start][end] = 'x';
-	changeCoordinates(matrix,size,start+1,end);
-	changeCoordinates(matrix,size,start-1,end);
-	changeCoordinates(matrix,size,start,end+1);
-	changeCoordinates(matrix,size,start,end-1);
+	if(matrix[start][end] !== initial) return;
+	matrix[start][end] = (initial === 'o') ? 'x' : 'o';
+	changeCoordinates(matrix,initial,size,start+1,end);
+	changeCoordinates(matrix,initial,size,start-1,end);
+	changeCoordinates(matrix,initial,size,start,end+1);
+	changeCoordinates(matrix,initial,size,start,end-1);
 }
 
 var getCurrentMatrix = function(){
@@ -60,9 +45,9 @@ var getCurrentMatrix = function(){
 
 $(document).on('click','td',function(){
 	var matrix = getCurrentMatrix();
-	var coordinates = $(this).text().split(',');
-	
-	changeCoordinates(matrix,matrix.length,+(coordinates[0]),+(coordinates[1]))
+	var coordinates = $(this).data('coordinate').split(',');
+	var className = $(this).attr('class');
+	changeCoordinates(matrix,className,matrix.length,+(coordinates[0]),+(coordinates[1]))
 	deployMatrix(matrix);
 });
 
