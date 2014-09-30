@@ -8,6 +8,11 @@ td{
 	text-align: center;
 	width: 40px;
 	height: 40px;
+	-webkit-transition: background-color 2s;
+    -moz-transition: background-color 2s;
+    -o-transition: background-color 2s;
+    -ms-transition: background-color 2s;
+    transition: background-color 2s;
 }
 
 td.x{
