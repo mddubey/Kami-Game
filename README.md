@@ -1,4 +1,4 @@
 Kami-Game
 ====
 
-Developing Kamo-Game in javascript.
+Developing Kami-Game in javascript.
