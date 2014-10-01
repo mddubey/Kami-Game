@@ -1,4 +1,4 @@
-Game
+Kami-Game
 ====
 
-A Game which's name I forgot
+Developing Kamo-Game in javascript.
